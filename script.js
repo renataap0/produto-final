@@ -11,7 +11,7 @@ let drivers = [
     { driverId: 2, time: '1:19.120', compound: 'Medium', status: 'OK' }
   ];
   
-  // Relógio do Sistema
+ 
   setInterval(() => {
     const now = new Date();
     document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR');
@@ -24,7 +24,7 @@ let drivers = [
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
   
-  // ── Funções de Login ──
+  
   function doLogin() {
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
@@ -46,14 +46,14 @@ let drivers = [
     document.getElementById('password').value = '';
   }
   
-  // ── Navegação ──
+
   function navigate(pageId, element) {
-    // Esconde todas as páginas
+    
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // Mostra a selecionada
+    
     document.getElementById(`page-${pageId}`).classList.add('active');
     
-    // Atualiza sidebar
+    
     if(element) {
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       element.classList.add('active');
@@ -64,7 +64,7 @@ let drivers = [
     showToast("Dados do Dashboard Atualizados!");
   }
   
-  // ── Modais ──
+ 
   function openAddDriver() {
     document.getElementById('modal-driver').classList.add('open');
   }
@@ -79,7 +79,7 @@ let drivers = [
     document.getElementById(modalId).classList.remove('open');
   }
   
-  // ── Ações ──
+
   function addDriver() {
     const name = document.getElementById('d-name').value;
     const num = document.getElementById('d-num').value;
@@ -116,7 +116,7 @@ let drivers = [
     showToast("Volta registrada com sucesso!");
   }
   
-  // ── Renderização da Interface ──
+ 
   function initApp() {
     renderDrivers();
     renderStandings();
