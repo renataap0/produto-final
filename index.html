@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Racing Angels — Formula One Team</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="carbon-bg">
+  
+  <div class="loader-bar" id="loader"></div>
+  
+  <div id="login-screen" class="screen active">
+    <div class="login-bg"></div>
+    <div class="login-lines"></div>
+    
+    <div class="login-card">
+      <div class="login-emblem">
+        <div class="emblem-ring">
+          <div class="wing-icon">⚡</div>
+        </div>
+        <div class="login-title">Racing Angels</div>
+        <div class="login-subtitle">Formula One Team — Acesso Restrito</div>
+        <div class="logo-line"></div>
+      </div>
+  
+      <div class="form-group">
+        <label class="form-label">Credencial de Acesso</label>
+        <input type="text" id="username" class="form-input" placeholder="admin" autocomplete="off">
+      </div>
+  
+      <div class="form-group">
+        <label class="form-label">Chave de Segurança</label>
+        <input type="password" id="password" class="form-input" placeholder="••••••••">
+      </div>
+  
+      <button class="btn-login" onclick="doLogin()">◆ INICIAR SESSÃO ◆</button>
+      <div class="login-error" id="login-error"></div>
+      <div class="login-hint">Credenciais padrão: admin / racing2025</div>
+    </div>
+  </div>
+  
+  <div id="app" class="screen">
+    
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">RA</div>
+        <div class="logo-sub">Formula One</div>
+        <div class="logo-line"></div>
+      </div>
+  
+      <div class="nav-section">
+        <div class="nav-label">Principal</div>
+        <div class="nav-item active" onclick="navigate('dashboard', this)">
+          <span class="nav-icon">◈</span>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="navigate('drivers', this)">
+          <span class="nav-icon">◉</span>
+          <span>Corredores</span>
+          <span class="nav-badge">4</span>
+        </div>
+        <div class="nav-item" onclick="navigate('laps', this)">
+          <span class="nav-icon">⏱</span>
+          <span>Voltas</span>
+        </div>
+      </div>
+  
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="user-avatar" id="user-avatar">AD</div>
+          <div>
+            <div class="user-name" id="user-name-display">Admin</div>
+            <div class="user-role">Engenharia</div>
+          </div>
+          <button class="btn-logout" onclick="doLogout()">SAIR</button>
+        </div>
+      </div>
+    </nav>
+  
+    <div class="main-content">
+      <div class="topbar">
+        <div class="topbar-title" id="page-title">Dashboard</div>
+        <div class="topbar-meta">
+          <span><span class="status-dot"></span>SISTEMA ATIVO</span>
+          <span id="clock">00:00:00</span>
+          <span>GP BRASIL 2025</span>
+        </div>
+      </div>
+  
+      <div id="page-dashboard" class="page active">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Painel de Controle <span>Temporada 2025 — Visão Geral</span></div>
+            <div class="gold-line"></div>
+          </div>
+          <button class="btn-detail" onclick="refreshDash()">↻ ATUALIZAR</button>
+        </div>
+  
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Posição no Campeonato</div>
+            <div class="stat-value" id="s-pos">3º</div>
+            <div class="stat-unit">Construtores</div>
+            <div class="stat-delta delta-up">↑ +1</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pontos Totais</div>
+            <div class="stat-value" id="s-pts">284</div>
+            <div class="stat-unit">Temporada 2025</div>
+            <div class="stat-delta delta-up">+18 última corrida</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Melhor Volta</div>
+            <div class="stat-value" id="s-lap">1:18.4</div>
+            <div class="stat-unit">GP Silverstone</div>
+            <div class="stat-delta delta-up">▲ FASTEST LAP</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pódios</div>
+            <div class="stat-value" id="s-pod">7</div>
+            <div class="stat-unit">Esta temporada</div>
+            <div class="stat-delta delta-up">↑ +2 vs 2024</div>
+          </div>
+        </div>
+  
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">⏱ Tempo por Volta — Últimas 8 Corridas</div>
+            <div class="lap-chart" id="lap-chart">
+               </div>
+            <div class="lap-legend">
+              <span><span class="legend-dot" style="background:#D4A017"></span>Rafaela Santana</span>
+              <span><span class="legend-dot" style="background:#4488CC"></span>Renata Aparecida</span>
+            </div>
+          </div>
+  
+          <div class="panel">
+            <div class="panel-title">◈ Classificação de Pilotos</div>
+            <table class="standings-table">
+              <thead>
+                <tr>
+                  <th>Pos</th>
+                  <th>Piloto</th>
+                  <th>Equipe</th>
+                  <th style="text-align:right">Pts</th>
+                </tr>
+              </thead>
+              <tbody id="standings-body">
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <div id="page-drivers" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Corredores <span>Elenco Completo — Temporada 2025</span></div>
+            <div class="gold-line"></div>
+          </div>
+          <button class="btn-detail" onclick="openAddDriver()">+ ADICIONAR CORREDOR</button>
+        </div>
+        <div class="drivers-grid" id="drivers-grid">
+          </div>
+      </div>
+  
+      <div id="page-laps" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Voltas <span>Registro de Telemetria</span></div>
+            <div class="gold-line"></div>
+          </div>
+        </div>
+  
+        <div class="laps-controls">
+          <div class="control-group">
+            <div class="control-label">Corredor</div>
+            <select class="control-select" id="filter-driver">
+              <option value="">Todos os pilotos</option>
+            </select>
+          </div>
+          <div class="control-group" style="margin-left:auto">
+            <div class="control-label">&nbsp;</div>
+            <button class="btn-add-lap" onclick="openAddLap()">+ REGISTRAR VOLTA</button>
+          </div>
+        </div>
+  
+        <div class="laps-table-wrap">
+          <table class="laps-table">
+            <thead>
+              <tr>
+                <th>Piloto</th>
+                <th>Tempo</th>
+                <th>Composto</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="laps-body">
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-driver">
+    <div class="modal-box">
+      <div class="modal-title">◉ Novo Corredor</div>
+      <div class="modal-grid">
+        <div class="form-group">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" id="d-name" class="form-input" placeholder="ex: Rafaela Santana">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Número</label>
+          <input type="number" id="d-num" class="form-input" placeholder="ex: 44">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nacionalidade</label>
+          <input type="text" id="d-nat" class="form-input" placeholder="ex: 🇧🇷 BRA">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Função</label>
+          <select id="d-role" class="form-input control-select">
+            <option>Principal</option>
+            <option>Reserva</option>
+            <option>Academia</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('modal-driver')">CANCELAR</button>
+        <button class="btn-confirm" onclick="addDriver()">◆ CONFIRMAR</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-lap">
+    <div class="modal-box">
+      <div class="modal-title">⏱ Registrar Volta</div>
+      <div class="modal-grid">
+        <div class="form-group">
+          <label class="form-label">Corredor</label>
+          <select id="l-driver" class="form-input control-select">
+              </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tempo (mm:ss.ms)</label>
+          <input type="text" id="l-time" class="form-input" placeholder="1:20.500">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('modal-lap')">CANCELAR</button>
+        <button class="btn-confirm" onclick="addLap()">◆ SALVAR</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Operação realizada com sucesso!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
