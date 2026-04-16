@@ -30,7 +30,7 @@ let drivers = [
     const pass = document.getElementById('password').value;
     const err = document.getElementById('login-error');
   
-    if (user === 'admin' && pass === 'racing2025') {
+    if (user === 'admin' && pass === 'racing2026') {
       document.getElementById('login-screen').classList.remove('active');
       document.getElementById('app').classList.add('active');
       initApp();
